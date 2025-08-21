@@ -1,0 +1,10 @@
+[
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard\\/addRecipe(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "/dashboard/addRecipe"
+  },
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard\\/myRecipe(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "/dashboard/myRecipe"
+  }
+]
