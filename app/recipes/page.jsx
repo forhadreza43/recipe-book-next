@@ -1,3 +1,4 @@
+import AllRecipes from "@/components/AllRecipes";
 import RecipesContainer from "@/components/RecipesContainer";
 
 export const dynamic = "force-dynamic";
@@ -10,6 +11,9 @@ const AllRecipePage = () => {
       </h1>
       <RecipesContainer />
     </div>
+    // <>
+    //   <AllRecipes />
+    // </>
   );
 };
 

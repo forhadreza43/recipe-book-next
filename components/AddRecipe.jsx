@@ -52,7 +52,7 @@ export default function AddRecipe() {
     };
 
     try {
-      fetch("https://recipe-book-app-server-chi.vercel.app/recipes", {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipes`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

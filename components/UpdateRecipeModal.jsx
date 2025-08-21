@@ -17,12 +17,12 @@ export default function UpdateRecipeModal({ recipe, onClose, onUpdate }) {
 
     try {
       const res = await fetch(
-        `https://recipe-book-app-server-chi.vercel.app/recipes/${recipe._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/recipes/${recipe._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        },
+        }
       );
 
       if (res.ok) {

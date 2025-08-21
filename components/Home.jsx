@@ -15,7 +15,7 @@ export default function Home() {
     const fetchTopRecipes = async () => {
       try {
         const res = await fetch(
-          "https://recipe-book-app-server-chi.vercel.app/top-recipes",
+          `${process.env.NEXT_PUBLIC_API_URL}/top-recipes`
         );
         const data = await res.json();
         setTopRecipes(data);

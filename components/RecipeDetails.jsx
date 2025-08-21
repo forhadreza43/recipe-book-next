@@ -13,7 +13,7 @@ export default function RecipeDetails({id}) {
     const fetchRecipe = async () => {
       try {
         const response = await fetch(
-          `https://recipe-book-app-server-chi.vercel.app/recipes/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/recipes/${id}`,
         );
         const data = await response.json();
         setRecipe(data);
@@ -35,7 +35,7 @@ export default function RecipeDetails({id}) {
 
     try {
       const response = await fetch(
-        `https://recipe-book-app-server-chi.vercel.app/recipes/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/recipes/${id}`,
         {
           method: "PATCH",
           headers: {

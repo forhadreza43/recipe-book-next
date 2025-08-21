@@ -1,6 +1,5 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
-// import GlobalLoader from "./GlobalLoader";
 import { cuisineTypes } from "@/utils/utils";
 import RecipeCard from "./RecipeCard";
 import MyRecipeCardSkeleton from "./Skeleton/MyRecipeCardSkeleton";
@@ -16,11 +15,12 @@ export default function AllRecipes() {
     const fetchRecipes = async () => {
       try {
         const response = await fetch(
-          "https://recipe-book-app-server-chi.vercel.app/recipes",
+          `${process.env.NEXT_PUBLIC_API_URL}/recipes`,
+          { cache: "no-store" }
         );
         const data = await response.json();
         setRecipes(data);
-        setFilteredRecipes(data); 
+        setFilteredRecipes(data);
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
       } finally {
@@ -35,7 +35,7 @@ export default function AllRecipes() {
       setFilteredRecipes(recipes);
     } else {
       setFilteredRecipes(
-        recipes.filter((recipe) => recipe.cuisine === selectedCuisine),
+        recipes.filter((recipe) => recipe.cuisine === selectedCuisine)
       );
     }
   }, [selectedCuisine, recipes]);

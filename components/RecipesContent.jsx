@@ -1,10 +1,9 @@
 import RecipeCard from "./RecipeCard";
 
 async function getRecipes() {
-  const response = await fetch(
-    "https://recipe-book-app-server-chi.vercel.app/recipes",
-    { cache: "no-store" }
-  );
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipes`, {
+    cache: "no-store",
+  });
   if (!response.ok) {
     throw new Error("Failed to fetch recipes");
   }

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/middleware.js"],"sourcesContent":["import { NextResponse } from \"next/server\";\nimport { getToken } from \"next-auth/jwt\";\n\nexport async function middleware(request) {\n  const token = await getToken({\n    req: request,\n    secret: process.env.AUTH_SECRET,\n  });\n\n  if (!token) {\n    const loginUrl = new URL(\"/login\", request.url);\n    loginUrl.searchParams.set(\"callbackUrl\", request.url);\n    return NextResponse.redirect(loginUrl);\n  }\n\n  return NextResponse.next();\n}\n\nexport const config = {\n  matcher: [\"/dashboard/addRecipe\", \"/dashboard/myRecipe\"],\n};\n"],"names":[],"mappings":";;;;;;AAAA;AAAA;AACA;AAAA;;;AAEO,eAAe,WAAW,OAAO;IACtC,MAAM,QAAQ,MAAM,IAAA,yJAAQ,EAAC;QAC3B,KAAK;QACL,QAAQ,QAAQ,GAAG,CAAC,WAAW;IACjC;IAEA,IAAI,CAAC,OAAO;QACV,MAAM,WAAW,IAAI,IAAI,UAAU,QAAQ,GAAG;QAC9C,SAAS,YAAY,CAAC,GAAG,CAAC,eAAe,QAAQ,GAAG;QACpD,OAAO,gMAAY,CAAC,QAAQ,CAAC;IAC/B;IAEA,OAAO,gMAAY,CAAC,IAAI;AAC1B;AAEO,MAAM,SAAS;IACpB,SAAS;QAAC;QAAwB;KAAsB;AAC1D"}}]
+}
