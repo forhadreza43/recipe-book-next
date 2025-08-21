@@ -11,12 +11,16 @@
       "page": "/",
       "matchers": [
         {
-          "regexp": "/:nextData(_next/data/[^/]{1,})?/dashboard/addRecipe{(\\\\.json)}?",
-          "originalSource": "/dashboard/addRecipe"
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/dashboard/addRecipe/:path*{(\\\\.json)}?",
+          "originalSource": "/dashboard/addRecipe/:path*"
         },
         {
-          "regexp": "/:nextData(_next/data/[^/]{1,})?/dashboard/myRecipe{(\\\\.json)}?",
-          "originalSource": "/dashboard/myRecipe"
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/dashboard/myRecipe/:path*{(\\\\.json)}?",
+          "originalSource": "/dashboard/myRecipe/:path*"
+        },
+        {
+          "regexp": "/:nextData(_next/data/[^/]{1,})?/dashboard/:path*{(\\\\.json)}?",
+          "originalSource": "/dashboard/:path*"
         }
       ],
       "wasm": [],
