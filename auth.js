@@ -64,7 +64,7 @@ export const authConfig = {
         token.refreshToken = user.refreshToken;
       }
 
-          if (account && account.provider === "google") {
+      if (account && account.provider === "google") {
         //   console.log(profile);
         try {
           const res = await fetch(
@@ -83,7 +83,7 @@ export const authConfig = {
             }
           );
           if (res.ok) {
-              const data = await res.json();
+            const data = await res.json();
             //   console.log(data);
             token.userId = data.user.id;
             token.role = data.user.role;

@@ -18,7 +18,7 @@ export default function Navbar() {
     redirect("/");
   };
 
-  // console.log("Session data:", session?.user);
+  console.log("Session data:", session?.user);
 
   const navLinkClasses =
     "text-gray-700 hover:text-orange-500 dark:text-gray-200";

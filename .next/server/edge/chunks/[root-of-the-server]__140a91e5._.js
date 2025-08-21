@@ -31,19 +31,16 @@ async function middleware(request) {
     try {
         const token = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$auth$2f$core$2f$jwt$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["getToken"])({
             req: request,
-            secret: process.env.AUTH_SECRET
+            secret: process.env.AUTH_SECRET,
+            raw: true
         });
         console.log("Middleware token:", token);
-        console.log("AUTH_SECRET exists:", !!process.env.AUTH_SECRET);
         if (!token) {
-            console.log("No token found, redirecting to login");
+            console.log("Invalid token, redirecting to login");
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(new URL("/login", request.url));
         }
-        console.log("Token found, continuing to protected route");
-        const response = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next();
-        // Ensure the response headers indicate successful auth
-        response.headers.set("x-middleware-cache", "no-cache");
-        return response;
+        console.log("Valid token found, continuing to protected route");
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next();
     } catch (error) {
         console.error("Middleware error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(new URL("/login", request.url));

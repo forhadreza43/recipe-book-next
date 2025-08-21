@@ -48,6 +48,9 @@ export default function LoginPage() {
           toast.error("Password is incorrect");
         }
       } else {
+        // Success - update router
+        router.refresh();
+        router.push("/");
         setEmail("");
         setPassword("");
         toast.success("Login successful!");

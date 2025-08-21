@@ -8,21 +8,18 @@ export async function middleware(request) {
     const token = await getToken({
       req: request,
       secret: process.env.AUTH_SECRET,
+      raw: true,
     });
 
     console.log("Middleware token:", token);
-    console.log("AUTH_SECRET exists:", !!process.env.AUTH_SECRET);
 
     if (!token) {
-      console.log("No token found, redirecting to login");
+      console.log("Invalid token, redirecting to login");
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    console.log("Token found, continuing to protected route");
-    const response = NextResponse.next();
-    // Ensure the response headers indicate successful auth
-    response.headers.set("x-middleware-cache", "no-cache");
-    return response;
+    console.log("Valid token found, continuing to protected route");
+    return NextResponse.next();
   } catch (error) {
     console.error("Middleware error:", error);
     return NextResponse.redirect(new URL("/login", request.url));

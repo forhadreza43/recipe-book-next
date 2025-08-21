@@ -191,7 +191,7 @@ function Navbar() {
         await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signOut"])();
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["redirect"])("/");
     };
-    // console.log("Session data:", session?.user);
+    console.log("Session data:", session === null || session === void 0 ? void 0 : session.user);
     const navLinkClasses = "text-gray-700 hover:text-orange-500 dark:text-gray-200";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
         className: "bg-white shadow-md dark:border-b dark:border-b-gray-600 dark:bg-gray-900",
