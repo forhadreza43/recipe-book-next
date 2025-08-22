@@ -59,7 +59,7 @@ export default function RecipeDetails({ id }) {
   if (!recipe) return <div className="mt-10 text-center">Recipe not found</div>;
 
   return (
-    <div className="mx-auto py-10">
+    <div className="mx-auto pt25 lg:pt-30 py-10">
       <p className="mb-4 text-xl font-semibold text-orange-500">
         {likeCount} people interested in this recipe
       </p>

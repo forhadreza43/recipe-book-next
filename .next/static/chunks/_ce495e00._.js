@@ -147,27 +147,6 @@ const MyRecipeCardSkeleton = ()=>{
                         fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
                         lineNumber: 9,
                         columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mt-1 h-4 w-2/3 rounded bg-gray-300 dark:bg-gray-700"
-                    }, void 0, false, {
-                        fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
-                        lineNumber: 10,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mt-1 h-4 w-full rounded bg-gray-300 dark:bg-gray-700"
-                    }, void 0, false, {
-                        fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
-                        lineNumber: 11,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mt-1 h-4 w-5/6 rounded bg-gray-300 dark:bg-gray-700"
-                    }, void 0, false, {
-                        fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
-                        lineNumber: 12,
-                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
@@ -176,26 +155,17 @@ const MyRecipeCardSkeleton = ()=>{
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mt-3 flex justify-between",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "h-8 w-20 rounded bg-gray-300 dark:bg-gray-700"
-                    }, void 0, false, {
-                        fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
-                        lineNumber: 15,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "h-8 w-20 rounded bg-gray-300 dark:bg-gray-700"
-                    }, void 0, false, {
-                        fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
-                        lineNumber: 16,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0))
-                ]
-            }, void 0, true, {
+                className: "mt-3 flex ",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "h-8 w-full rounded bg-gray-300 dark:bg-gray-700"
+                }, void 0, false, {
+                    fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
+                    lineNumber: 12,
+                    columnNumber: 9
+                }, ("TURBOPACK compile-time value", void 0))
+            }, void 0, false, {
                 fileName: "[project]/components/Skeleton/MyRecipeCardSkeleton.jsx",
-                lineNumber: 14,
+                lineNumber: 11,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
@@ -241,7 +211,6 @@ function AllRecipes() {
     _s();
     const [recipes, setRecipes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [filteredRecipes, setFilteredRecipes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [selectedCuisine, setSelectedCuisine] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("All");
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AllRecipes.useEffect": ()=>{
@@ -256,8 +225,6 @@ function AllRecipes() {
                         setFilteredRecipes(data);
                     } catch (error) {
                         console.error("Failed to fetch recipes:", error);
-                    } finally{
-                        setLoading(false);
                     }
                 }
             }["AllRecipes.useEffect.fetchRecipes"];
@@ -278,11 +245,8 @@ function AllRecipes() {
         selectedCuisine,
         recipes
     ]);
-    // if (loading) {
-    //   return <GlobalLoader mini />;
-    // }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "py-10",
+        className: "py-10 ",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex justify-between",
@@ -292,7 +256,7 @@ function AllRecipes() {
                         children: "All Recipes"
                     }, void 0, false, {
                         fileName: "[project]/components/AllRecipes.jsx",
-                        lineNumber: 50,
+                        lineNumber: 43,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -307,23 +271,23 @@ function AllRecipes() {
                                     children: type
                                 }, type, false, {
                                     fileName: "[project]/components/AllRecipes.jsx",
-                                    lineNumber: 61,
+                                    lineNumber: 54,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/components/AllRecipes.jsx",
-                            lineNumber: 55,
+                            lineNumber: 48,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/AllRecipes.jsx",
-                        lineNumber: 54,
+                        lineNumber: 47,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/AllRecipes.jsx",
-                lineNumber: 49,
+                lineNumber: 42,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -331,34 +295,34 @@ function AllRecipes() {
                 children: filteredRecipes.map((recipe)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Suspense"], {
                         fallback: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Skeleton$2f$MyRecipeCardSkeleton$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                             fileName: "[project]/components/AllRecipes.jsx",
-                            lineNumber: 75,
+                            lineNumber: 68,
                             columnNumber: 31
                         }, void 0),
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$RecipeCard$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             recipe: recipe
                         }, recipe._id, false, {
                             fileName: "[project]/components/AllRecipes.jsx",
-                            lineNumber: 76,
+                            lineNumber: 69,
                             columnNumber: 13
                         }, this)
                     }, recipe._id, false, {
                         fileName: "[project]/components/AllRecipes.jsx",
-                        lineNumber: 75,
+                        lineNumber: 68,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/components/AllRecipes.jsx",
-                lineNumber: 73,
+                lineNumber: 66,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/AllRecipes.jsx",
-        lineNumber: 48,
+        lineNumber: 41,
         columnNumber: 5
     }, this);
 }
-_s(AllRecipes, "J1pNXCPrRptY5DRaCpFDUSRTIyk=");
+_s(AllRecipes, "BtYCO8qwl9g9KhUYN012jHNhybA=");
 _c = AllRecipes;
 var _c;
 __turbopack_context__.k.register(_c, "AllRecipes");

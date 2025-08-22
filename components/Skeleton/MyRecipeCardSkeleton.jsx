@@ -7,13 +7,9 @@ const MyRecipeCardSkeleton = () => {
         <div className="mt-2 h-4 w-1/2 rounded bg-gray-300 dark:bg-gray-700"></div>
         <div className="mt-1 h-4 w-1/3 rounded bg-gray-300 dark:bg-gray-700"></div>
         <div className="mt-1 h-4 w-1/4 rounded bg-gray-300 dark:bg-gray-700"></div>
-        <div className="mt-1 h-4 w-2/3 rounded bg-gray-300 dark:bg-gray-700"></div>
-        <div className="mt-1 h-4 w-full rounded bg-gray-300 dark:bg-gray-700"></div>
-        <div className="mt-1 h-4 w-5/6 rounded bg-gray-300 dark:bg-gray-700"></div>
       </div>
-      <div className="mt-3 flex justify-between">
-        <div className="h-8 w-20 rounded bg-gray-300 dark:bg-gray-700"></div>
-        <div className="h-8 w-20 rounded bg-gray-300 dark:bg-gray-700"></div>
+      <div className="mt-3 flex ">
+        <div className="h-8 w-full rounded bg-gray-300 dark:bg-gray-700"></div>
       </div>
     </div>
   );

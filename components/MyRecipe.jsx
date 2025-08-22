@@ -83,7 +83,7 @@ export default function MyRecipes() {
   };
 
   return (
-    <div className="py-10">
+    <div className="py-10 pt-25 lg:pt-30">
       <>
         <h1 className="mb-6 text-center text-3xl font-bold dark:text-gray-200">
           My Recipes

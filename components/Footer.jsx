@@ -66,12 +66,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      <hr className="my-6 border-gray-700" />
-
-      <p className="text-center text-sm text-gray-400">
-        &copy; {new Date().getFullYear()} Recipe Book. All rights reserved.
-      </p>
     </footer>
   );
 }

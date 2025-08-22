@@ -8,7 +8,6 @@ const cuisineOptions = ["All", ...cuisineTypes];
 export default function AllRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedCuisine, setSelectedCuisine] = useState("All");
 
   useEffect(() => {
@@ -23,9 +22,7 @@ export default function AllRecipes() {
         setFilteredRecipes(data);
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
     fetchRecipes();
   }, []);
@@ -40,12 +37,8 @@ export default function AllRecipes() {
     }
   }, [selectedCuisine, recipes]);
 
-  // if (loading) {
-  //   return <GlobalLoader mini />;
-  // }
-
   return (
-    <div className="py-10">
+    <div className="py-10 ">
       <div className="flex justify-between">
         <h1 className="mb-6 text-center text-3xl font-bold dark:text-gray-200">
           All Recipes

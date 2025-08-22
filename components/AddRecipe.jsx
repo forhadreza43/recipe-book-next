@@ -88,107 +88,111 @@ export default function AddRecipe() {
       <LoaderFive text="Adding..." />
     </div>
   ) : (
-    <div className="mx-auto mt-20 max-w-3xl rounded border border-orange-300 p-6 shadow">
-      <h2 className="mb-4 text-2xl font-bold dark:text-gray-200">
-        Add a New Recipe
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={handleChange}
-          className="input-field"
-          required
-        />
-        <input
-          type="text"
-          name="title"
-          placeholder="Recipe Title"
-          value={formData.title}
-          onChange={handleChange}
-          className="input-field"
-          required
-        />
-        <textarea
-          name="ingredients"
-          placeholder="Ingredients"
-          value={formData.ingredients}
-          onChange={handleChange}
-          className="input-field"
-          required
-        />
-        <textarea
-          name="instructions"
-          placeholder="Instructions"
-          value={formData.instructions}
-          onChange={handleChange}
-          className="input-field"
-          required
-        />
-        <select
-          name="cuisine"
-          value={formData.cuisine}
-          onChange={handleChange}
-          className="input-field dark:text-gray-200"
-          required
-        >
-          <option value="">Select Cuisine Type</option>
-          {cuisineTypes.map((type) => (
-            <option
-              key={type}
-              className="bg-white text-black dark:bg-gray-800 dark:text-gray-200"
+    <div className="pt-25 lg:pt-30">
+      <div className="mx-auto  max-w-3xl rounded  p-6 shadow dark:bg-gray-800">
+        <div className="border  border-orange-300 p-6 rounded">
+          <h2 className="mb-4 text-2xl font-bold dark:text-gray-200">
+            Add a New Recipe
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="image"
+              placeholder="Image URL"
+              value={formData.image}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+            <input
+              type="text"
+              name="title"
+              placeholder="Recipe Title"
+              value={formData.title}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+            <textarea
+              name="ingredients"
+              placeholder="Ingredients"
+              value={formData.ingredients}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+            <textarea
+              name="instructions"
+              placeholder="Instructions"
+              value={formData.instructions}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+            <select
+              name="cuisine"
+              value={formData.cuisine}
+              onChange={handleChange}
+              className="input-field dark:text-gray-200"
+              required
             >
-              {type}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          name="time"
-          placeholder="Preparation Time (minutes)"
-          value={formData.time}
-          onChange={handleChange}
-          className="input-field"
-          required
-        />
-        <div>
-          <p className="mb-2 font-medium dark:text-gray-200">Categories:</p>
-          <div className="flex flex-wrap gap-4">
-            {categories.map((cat) => (
-              <label
-                key={cat}
-                className="flex items-center gap-2 dark:text-gray-200"
-              >
-                <input
-                  type="checkbox"
-                  name="categories"
-                  className=""
-                  value={cat}
-                  checked={formData.categories.includes(cat)}
-                  onChange={handleChange}
-                />
-                {cat}
-              </label>
-            ))}
-          </div>
-        </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="cursor-pointer rounded bg-orange-600 px-4 py-2 text-white hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {isLoading ? (
-            <div className="flex items-center gap-2">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-              Adding...
+              <option value="">Select Cuisine Type</option>
+              {cuisineTypes.map((type) => (
+                <option
+                  key={type}
+                  className="bg-white text-black dark:bg-gray-800 dark:text-gray-200"
+                >
+                  {type}
+                </option>
+              ))}
+            </select>
+            <input
+              type="number"
+              name="time"
+              placeholder="Preparation Time (minutes)"
+              value={formData.time}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+            <div>
+              <p className="mb-2 font-medium dark:text-gray-200">Categories:</p>
+              <div className="flex flex-wrap gap-4">
+                {categories.map((cat) => (
+                  <label
+                    key={cat}
+                    className="flex items-center gap-2 dark:text-gray-200"
+                  >
+                    <input
+                      type="checkbox"
+                      name="categories"
+                      className=""
+                      value={cat}
+                      checked={formData.categories.includes(cat)}
+                      onChange={handleChange}
+                    />
+                    {cat}
+                  </label>
+                ))}
+              </div>
             </div>
-          ) : (
-            "Add Recipe"
-          )}
-        </button>
-      </form>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="cursor-pointer rounded bg-orange-600 px-4 py-2 text-white hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                  Adding...
+                </div>
+              ) : (
+                "Add Recipe"
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

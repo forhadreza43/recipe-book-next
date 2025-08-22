@@ -2,7 +2,7 @@ const Hero = () => {
   return (
     <>
       <div
-        className="hero mt-15 overflow-hidden rounded-lg md:mt-20"
+        className="hero overflow-hidden rounded-lg "
         style={{
           backgroundImage: `url(/hero.png)`,
         }}
