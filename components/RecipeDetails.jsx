@@ -1,19 +1,19 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function RecipeDetails({id}) {
-  // const { user } = useContext(AuthContext);
+export default function RecipeDetails({ id }) {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [likeCount, setLikeCount] = useState(0);
-
+  const { data: session } = useSession();
+  // console.log(session?.user);
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/recipes/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/recipes/${id}`
         );
         const data = await response.json();
         setRecipe(data);
@@ -28,10 +28,10 @@ export default function RecipeDetails({id}) {
   }, [id]);
 
   const handleLike = async () => {
-    // if (user?.email === recipe.userEmail) {
-    //   toast.error("You can't like your own recipe!");
-    //   return;
-    // }
+    if (session?.user?.email === recipe.userEmail) {
+      toast.error("You can't like your own recipe!");
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -41,7 +41,7 @@ export default function RecipeDetails({id}) {
           headers: {
             "content-type": "application/json",
           },
-        },
+        }
       );
       if (response.ok) {
         const updatedRecipe = await response.json();
@@ -55,7 +55,6 @@ export default function RecipeDetails({id}) {
       toast.error("Something went wrong.");
     }
   };
-
 
   if (!recipe) return <div className="mt-10 text-center">Recipe not found</div>;
 
@@ -102,7 +101,7 @@ export default function RecipeDetails({id}) {
       <button
         onClick={handleLike}
         className="mt-4 rounded bg-orange-500 px-6 py-2 text-white hover:bg-orange-600 disabled:cursor-not-allowed"
-        // disabled={user?.email === recipe.userEmail}
+        disabled={session?.user?.email === recipe.userEmail}
       >
         Like
       </button>

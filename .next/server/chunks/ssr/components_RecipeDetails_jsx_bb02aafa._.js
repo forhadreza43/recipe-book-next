@@ -1,3 +1,265 @@
-module.exports=[94258,a=>{"use strict";a.s(["default",()=>e],94258);var b=a.i(87924),c=a.i(72131),d=a.i(6704);function e({id:a}){let[e,f]=(0,c.useState)(null),[g,h]=(0,c.useState)(!0),[i,j]=(0,c.useState)(0);(0,c.useEffect)(()=>{(async()=>{try{let b=await fetch(`https://recipe-book-app-server-chi.vercel.app/recipes/${a}`),c=await b.json();f(c),j(c.likes||0)}catch(a){console.error("Error fetching recipe:",a)}finally{h(!1)}})()},[a]);let k=async()=>{try{let b=await fetch(`https://recipe-book-app-server-chi.vercel.app/recipes/${a}`,{method:"PATCH",headers:{"content-type":"application/json"}});if(b.ok){let a=await b.json();j(a.likes),d.default.success("You liked the recipe!")}else d.default.error("Failed to like the recipe.")}catch(a){console.error("Error liking recipe:",a),d.default.error("Something went wrong.")}};return e?(0,b.jsxs)("div",{className:"mx-auto py-10",children:[(0,b.jsxs)("p",{className:"mb-4 text-xl font-semibold text-orange-500",children:[i," people interested in this recipe"]}),(0,b.jsx)("img",{src:e.image,alt:e.title,className:"mb-6 h-64 w-full rounded-lg object-cover"}),(0,b.jsx)("h1",{className:"mb-2 text-3xl font-bold dark:text-gray-200",children:e.title}),(0,b.jsxs)("p",{className:"mb-1 text-gray-600 dark:text-gray-200",children:[(0,b.jsx)("strong",{children:"Cuisine:"})," ",e.cuisine]}),(0,b.jsxs)("p",{className:"mb-1 text-gray-600 dark:text-gray-200",children:[(0,b.jsx)("strong",{children:"Prep Time:"})," ",e.prepTime," minutes"]}),(0,b.jsxs)("p",{className:"mb-1 text-gray-600 dark:text-gray-200",children:[(0,b.jsx)("strong",{children:"Likes:"})," ",i]}),(0,b.jsxs)("p",{className:"mb-1 text-gray-600 dark:text-gray-200",children:[(0,b.jsx)("strong",{children:"Categories:"})," ",e.categories?.join(", ")]}),(0,b.jsxs)("p",{className:"mb-4 text-gray-600 dark:text-gray-200",children:[(0,b.jsx)("strong",{children:"Added by:"})," ",e.user?.name||"Anonymous"]}),(0,b.jsxs)("div",{className:"mb-6 dark:text-gray-200",children:[(0,b.jsx)("h2",{className:"mb-2 text-xl font-semibold",children:"Ingredients:"}),(0,b.jsx)("p",{className:"whitespace-pre-line",children:e.ingredients})]}),(0,b.jsxs)("div",{className:"mb-6 dark:text-gray-200",children:[(0,b.jsx)("h2",{className:"mb-2 text-xl font-semibold",children:"Instructions:"}),(0,b.jsx)("p",{className:"whitespace-pre-line",children:e.instructions})]}),(0,b.jsx)("button",{onClick:k,className:"mt-4 rounded bg-orange-500 px-6 py-2 text-white hover:bg-orange-600 disabled:cursor-not-allowed",children:"Like"})]}):(0,b.jsx)("div",{className:"mt-10 text-center",children:"Recipe not found"})}}];
+module.exports = [
+"[project]/components/RecipeDetails.jsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>RecipeDetails
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-hot-toast/dist/index.mjs [app-ssr] (ecmascript)");
+"use client";
+;
+;
+;
+;
+function RecipeDetails({ id }) {
+    const [recipe, setRecipe] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [likeCount, setLikeCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
+    const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSession"])();
+    // console.log(session?.user);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const fetchRecipe = async ()=>{
+            try {
+                const response = await fetch(`${("TURBOPACK compile-time value", "https://recipe-book-app-server-chi.vercel.app")}/recipes/${id}`);
+                const data = await response.json();
+                setRecipe(data);
+                setLikeCount(data.likes || 0);
+            } catch (error) {
+                console.error("Error fetching recipe:", error);
+            } finally{
+                setLoading(false);
+            }
+        };
+        fetchRecipe();
+    }, [
+        id
+    ]);
+    const handleLike = async ()=>{
+        if (session?.user?.email === recipe.userEmail) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].error("You can't like your own recipe!");
+            return;
+        }
+        try {
+            const response = await fetch(`${("TURBOPACK compile-time value", "https://recipe-book-app-server-chi.vercel.app")}/recipes/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "content-type": "application/json"
+                }
+            });
+            if (response.ok) {
+                const updatedRecipe = await response.json();
+                setLikeCount(updatedRecipe.likes);
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].success("You liked the recipe!");
+            } else {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].error("Failed to like the recipe.");
+            }
+        } catch (error) {
+            console.error("Error liking recipe:", error);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].error("Something went wrong.");
+        }
+    };
+    if (!recipe) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "mt-10 text-center",
+        children: "Recipe not found"
+    }, void 0, false, {
+        fileName: "[project]/components/RecipeDetails.jsx",
+        lineNumber: 59,
+        columnNumber: 23
+    }, this);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "mx-auto py-10",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "mb-4 text-xl font-semibold text-orange-500",
+                children: [
+                    likeCount,
+                    " people interested in this recipe"
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 63,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                src: recipe.image,
+                alt: recipe.title,
+                className: "mb-6 h-64 w-full rounded-lg object-cover"
+            }, void 0, false, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 67,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "mb-2 text-3xl font-bold dark:text-gray-200",
+                children: recipe.title
+            }, void 0, false, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 72,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "mb-1 text-gray-600 dark:text-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                        children: "Cuisine:"
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 76,
+                        columnNumber: 9
+                    }, this),
+                    " ",
+                    recipe.cuisine
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 75,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "mb-1 text-gray-600 dark:text-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                        children: "Prep Time:"
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 79,
+                        columnNumber: 9
+                    }, this),
+                    " ",
+                    recipe.prepTime,
+                    " minutes"
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 78,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "mb-1 text-gray-600 dark:text-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                        children: "Likes:"
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 82,
+                        columnNumber: 9
+                    }, this),
+                    " ",
+                    likeCount
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 81,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "mb-1 text-gray-600 dark:text-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                        children: "Categories:"
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 85,
+                        columnNumber: 9
+                    }, this),
+                    " ",
+                    recipe.categories?.join(", ")
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 84,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "mb-4 text-gray-600 dark:text-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                        children: "Added by:"
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 88,
+                        columnNumber: 9
+                    }, this),
+                    " ",
+                    recipe.user?.name || "Anonymous"
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 87,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-6 dark:text-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                        className: "mb-2 text-xl font-semibold",
+                        children: "Ingredients:"
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 92,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "whitespace-pre-line",
+                        children: recipe.ingredients
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 93,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 91,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-6 dark:text-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                        className: "mb-2 text-xl font-semibold",
+                        children: "Instructions:"
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 97,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "whitespace-pre-line",
+                        children: recipe.instructions
+                    }, void 0, false, {
+                        fileName: "[project]/components/RecipeDetails.jsx",
+                        lineNumber: 98,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 96,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                onClick: handleLike,
+                className: "mt-4 rounded bg-orange-500 px-6 py-2 text-white hover:bg-orange-600 disabled:cursor-not-allowed",
+                disabled: session?.user?.email === recipe.userEmail,
+                children: "Like"
+            }, void 0, false, {
+                fileName: "[project]/components/RecipeDetails.jsx",
+                lineNumber: 101,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/RecipeDetails.jsx",
+        lineNumber: 62,
+        columnNumber: 5
+    }, this);
+}
+}),
+];
 
 //# sourceMappingURL=components_RecipeDetails_jsx_bb02aafa._.js.map
