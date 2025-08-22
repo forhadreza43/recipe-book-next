@@ -1961,51 +1961,6 @@
     margin-left: calc(var(--spacing) * 2);
   }
 
-  .status {
-    aspect-ratio: 1;
-    border-radius: var(--radius-selector);
-    background-color: var(--color-base-content);
-    width: .5rem;
-    height: .5rem;
-    display: inline-block;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .status {
-      background-color: color-mix(in oklab, var(--color-base-content) 20%, transparent);
-    }
-  }
-
-  .status {
-    vertical-align: middle;
-    color: rgba(0, 0, 0, .3);
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .status {
-      color: rgba(0, 0, 0, .3);
-    }
-
-    @supports (color: color-mix(in lab, red, red)) {
-      .status {
-        color: color-mix(in oklab, var(--color-black) 30%, transparent);
-      }
-    }
-  }
-
-  .status {
-    background-image: radial-gradient(circle at 35% 30%, oklch(1 0 0 / calc(var(--depth) * .5)), rgba(0, 0, 0, 0));
-    box-shadow: 0 2px 3px -1px;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .status {
-      box-shadow: 0 2px 3px -1px color-mix(in oklab, currentColor calc(var(--depth) * 100%), rgba(0, 0, 0, 0));
-    }
-  }
-
   .block {
     display: block;
   }
@@ -2711,14 +2666,6 @@
 
   .text-white {
     color: var(--color-white);
-  }
-
-  .lowercase {
-    text-transform: lowercase;
-  }
-
-  .uppercase {
-    text-transform: uppercase;
   }
 
   .underline-offset-4 {

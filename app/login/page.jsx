@@ -5,10 +5,11 @@ import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { update } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,34 +27,12 @@ export default function LoginPage() {
       });
 
       if (res?.error) {
-        // First check if user exists
-        const checkUser = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/check-user`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email }),
-          }
-        );
-
-        const userData = await checkUser.json();
-
-        if (!userData.exists) {
-          setError("No user found. Register first or continue with Google");
-          toast.error("No user found");
-        } else {
-          setError("Password is incorrect");
-          toast.error("Password is incorrect");
-        }
+        setError("Invalid email or password");
+        toast.error("Invalid email or password");
       } else {
-        // Success - update router
-        router.refresh();
-        router.push("/");
-        setEmail("");
-        setPassword("");
         toast.success("Login successful!");
+        await update();
+        router.refresh();
         router.push("/recipes");
       }
     } catch (err) {

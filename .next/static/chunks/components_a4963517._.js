@@ -648,13 +648,19 @@ function MyRecipes() {
     _s();
     const [recipes, setRecipes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [selectedRecipe, setSelectedRecipe] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"])();
     const user = session === null || session === void 0 ? void 0 : session.user;
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "MyRecipes.useEffect": ()=>{
             const fetchUserRecipes = {
                 "MyRecipes.useEffect.fetchUserRecipes": async ()=>{
+                    if (!(user === null || user === void 0 ? void 0 : user.email)) {
+                        setIsLoading(false);
+                        return;
+                    }
                     try {
+                        setIsLoading(true);
                         const response = await fetch("".concat(("TURBOPACK compile-time value", "https://recipe-book-app-server-chi.vercel.app"), "/recipes"));
                         const data = await response.json();
                         const usersData = data.filter({
@@ -664,13 +670,14 @@ function MyRecipes() {
                     } catch (error) {
                         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].error("Failed to fetch your recipes.");
                         console.log(error.message);
+                    } finally{
+                        setIsLoading(false);
                     }
                 }
             }["MyRecipes.useEffect.fetchUserRecipes"];
             fetchUserRecipes();
         }
     }["MyRecipes.useEffect"], [
-        recipes,
         user === null || user === void 0 ? void 0 : user.email
     ]);
     const handleDelete = async (id)=>{
@@ -718,21 +725,25 @@ function MyRecipes() {
                     children: "My Recipes"
                 }, void 0, false, {
                     fileName: "[project]/components/MyRecipe.jsx",
-                    lineNumber: 80,
+                    lineNumber: 88,
                     columnNumber: 9
                 }, this),
-                recipes.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                isLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3",
                     children: [
                         ...Array(6)
                     ].map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Skeleton$2f$MyRecipeCardSkeleton$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, i, false, {
                             fileName: "[project]/components/MyRecipe.jsx",
-                            lineNumber: 86,
+                            lineNumber: 94,
                             columnNumber: 15
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/MyRecipe.jsx",
-                    lineNumber: 84,
+                    lineNumber: 92,
+                    columnNumber: 11
+                }, this) : recipes.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$NoRecipesFound$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                    fileName: "[project]/components/MyRecipe.jsx",
+                    lineNumber: 98,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                     children: [
@@ -744,12 +755,12 @@ function MyRecipes() {
                                     handleDelete: handleDelete
                                 }, recipe._id, false, {
                                     fileName: "[project]/components/MyRecipe.jsx",
-                                    lineNumber: 93,
+                                    lineNumber: 103,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/components/MyRecipe.jsx",
-                            lineNumber: 91,
+                            lineNumber: 101,
                             columnNumber: 13
                         }, this),
                         selectedRecipe && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$UpdateRecipeModal$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -758,7 +769,7 @@ function MyRecipes() {
                             onUpdate: handleUpdate
                         }, void 0, false, {
                             fileName: "[project]/components/MyRecipe.jsx",
-                            lineNumber: 102,
+                            lineNumber: 112,
                             columnNumber: 15
                         }, this)
                     ]
@@ -767,11 +778,11 @@ function MyRecipes() {
         }, void 0, true)
     }, void 0, false, {
         fileName: "[project]/components/MyRecipe.jsx",
-        lineNumber: 78,
+        lineNumber: 86,
         columnNumber: 5
     }, this);
 }
-_s(MyRecipes, "lvjeopLVlkT9JipYj9HTF6cRvAc=", false, function() {
+_s(MyRecipes, "U6TSZZNi/yf1whJ2QCwwJohR+6I=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"]
     ];

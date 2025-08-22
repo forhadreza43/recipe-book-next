@@ -3,7 +3,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import Footer from "@/components/Footer";
-import AuthProvider from "@/components/AuthProvider";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -27,18 +26,16 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <Providers>
-            <Toaster position="top-right" reverseOrder={false} />
-            <header>
-              <Navbar />
-            </header>
-            <main className="duration-900 mx-auto min-h-dvh w-11/12 max-w-7xl">
-              {children}
-            </main>
-            <Footer />
-          </Providers>
-        </AuthProvider>
+        <Providers>
+          <Toaster position="top-right" reverseOrder={false} />
+          <header>
+            <Navbar />
+          </header>
+          <main className="duration-900 mx-auto min-h-dvh w-11/12 max-w-7xl">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

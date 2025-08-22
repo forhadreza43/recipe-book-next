@@ -11,12 +11,18 @@ import MyRecipeCardSkeleton from "./Skeleton/MyRecipeCardSkeleton";
 export default function MyRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
   const user = session?.user;
 
   useEffect(() => {
     const fetchUserRecipes = async () => {
+      if (!user?.email) {
+        setIsLoading(false);
+        return;
+      }
       try {
+        setIsLoading(true);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/recipes`
         );
@@ -26,10 +32,12 @@ export default function MyRecipes() {
       } catch (error) {
         toast.error("Failed to fetch your recipes.");
         console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchUserRecipes();
-  }, [recipes, user?.email]);
+  }, [user?.email]);
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -80,12 +88,14 @@ export default function MyRecipes() {
         <h1 className="mb-6 text-center text-3xl font-bold dark:text-gray-200">
           My Recipes
         </h1>
-        {recipes.length === 0 ? (
+        {isLoading ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[...Array(6)].map((_, i) => (
               <MyRecipeCardSkeleton key={i} />
             ))}
           </div>
+        ) : recipes.length === 0 ? (
+          <NoRecipesFound />
         ) : (
           <>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,34 +1,16 @@
 import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 
-export async function middleware(request) {
-  console.log("Middleware executing for path:", request.nextUrl.pathname);
+const protectedRoutes = ["/dashboard"];
 
-  try {
-    const token = await getToken({
-      req: request,
-      secret: process.env.AUTH_SECRET,
-      raw: true,
-    });
+export default function middleware(request) {
+  const session = request.cookies.get("next-auth.session-token");
+  const url = request.nextUrl.clone();
 
-    console.log("Middleware token:", token);
-
-    if (!token) {
-      console.log("Invalid token, redirecting to login");
+  if (!session) {
+    if (protectedRoutes.some((path) => url.pathname.startsWith(path))) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-
-    console.log("Valid token found, continuing to protected route");
-    return NextResponse.next();
-  } catch (error) {
-    console.error("Middleware error:", error);
-    return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  return NextResponse.next();
 }
-export const config = {
-  matcher: [
-    "/dashboard/addRecipe/:path*",
-    "/dashboard/myRecipe/:path*",
-    "/dashboard/:path*",
-  ],
-};

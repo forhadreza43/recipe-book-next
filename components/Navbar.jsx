@@ -4,21 +4,20 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Menu, X } from "lucide-react";
 import DarkModeToggle from "./DarkModeToggle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 
 export default function Navbar() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  const handleLogout = async () => {
-    await signOut();
-    redirect("/");
+  const handleLogout = () => {
+    signOut({ callbackUrl: "/" });
   };
 
-  console.log("Session data:", session?.user);
+  console.log("Session data:", session?.user, "Status:", status);
 
   const navLinkClasses =
     "text-gray-700 hover:text-orange-500 dark:text-gray-200";
@@ -127,14 +126,14 @@ export default function Navbar() {
               All Recipes
             </Link>
             <Link
-              href="/addRecipe"
+              href="/dashboard/addRecipe"
               className={navLinkClasses}
               onClick={() => setMobileMenuOpen(false)}
             >
               Add Recipe
             </Link>
             <Link
-              href="/myRecipe"
+              href="/dashboard/myRecipe"
               className={navLinkClasses}
               onClick={() => setMobileMenuOpen(false)}
             >

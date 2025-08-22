@@ -1,14 +1,6 @@
 [
   {
-    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard\\/addRecipe(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
-    "originalSource": "/dashboard/addRecipe/:path*"
-  },
-  {
-    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard\\/myRecipe(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
-    "originalSource": "/dashboard/myRecipe/:path*"
-  },
-  {
-    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
-    "originalSource": "/dashboard/:path*"
+    "regexp": "^/.*$",
+    "originalSource": "/:path*"
   }
 ]

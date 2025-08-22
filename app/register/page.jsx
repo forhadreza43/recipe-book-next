@@ -2,10 +2,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Register() {
   const router = useRouter();
+  const { update } = useSession();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,20 +17,7 @@ export default function Register() {
     e.preventDefault();
     setError("");
 
-    // // Client-side password validation
-    // const hasUppercase = /[A-Z]/.test(password);
-    // const hasLowercase = /[a-z]/.test(password);
-    // const isLongEnough = password.length >= 6;
-
-    // if (!hasUppercase || !hasLowercase || !isLongEnough) {
-    //   setError(
-    //     "Password must be at least 6 characters long and include both uppercase and lowercase letters."
-    //   );
-    //   return;
-    // }
-
     try {
-      // Step 1: Register user in backend
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
         {
@@ -51,10 +39,6 @@ export default function Register() {
         throw new Error(message || "Registration failed");
       }
 
-      const data = await res.json();
-      console.log("Registration successful:", data);
-
-      // Step 2: Automatically sign in with credentials
       const result = await signIn("credentials", {
         redirect: false,
         email,
@@ -64,7 +48,9 @@ export default function Register() {
       if (result?.error) {
         setError(result.error);
       } else {
-        router.push("/");
+        await update();
+        router.refresh();
+        router.push("/recipes");
       }
     } catch (err) {
       setError(err.message);
