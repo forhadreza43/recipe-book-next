@@ -3,16 +3,19 @@
   "middleware": {
     "/": {
       "files": [
-        "server/edge/chunks/_2bfa59cf._.js",
-        "server/edge/chunks/[root-of-the-server]__140a91e5._.js",
-        "server/edge/chunks/turbopack-edge-wrapper_937effaf.js"
+        "server/edge/chunks/_374e2925._.js",
+        "server/edge/chunks/node_modules_@auth_core_495065ed._.js",
+        "server/edge/chunks/node_modules_jose_dist_webapi_ec3764e0._.js",
+        "server/edge/chunks/node_modules_c345f5d9._.js",
+        "server/edge/chunks/[root-of-the-server]__43e28123._.js",
+        "server/edge/chunks/turbopack-edge-wrapper_5c67b65e.js"
       ],
       "name": "middleware",
       "page": "/",
       "matchers": [
         {
-          "regexp": "^/.*$",
-          "originalSource": "/:path*"
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/dashboard/:path*"
         }
       ],
       "wasm": [],
