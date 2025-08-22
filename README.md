@@ -1,36 +1,228 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🍳 Recipe Book
 
-## Getting Started
+A modern, full-stack recipe management application built with Next.js 18, featuring user authentication, recipe CRUD operations, and a beautiful responsive design with dark mode support.
 
-First, run the development server:
+## ✨ Features
+
+- **🔐 User Authentication**: Secure login/register with NextAuth.js
+- **📝 Recipe Management**: Create, read, update, and delete recipes
+- **🖼️ Image Optimization**: Next.js Image component with ImgBB integration
+- **🌙 Dark Mode**: Toggle between light and dark themes
+- **📱 Responsive Design**: Mobile-first approach with Tailwind CSS
+- **⚡ Performance**: Server-side rendering and image optimization
+- **🔍 Search & Filter**: Find recipes by cuisine, ingredients, and more
+
+## 🚀 Tech Stack
+
+- **Frontend**: Next.js 18 (App Router), React 18, Tailwind CSS
+- **Authentication**: NextAuth.js with Google OAuth
+- **Styling**: Tailwind CSS with custom components
+- **Icons**: Lucide React
+- **Image Hosting**: ImgBB integration
+- **Deployment**: Vercel ready
+
+## 📋 Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Google OAuth credentials (for authentication)
+- ImgBB API key (for image uploads)
+
+## 🛠️ Setup & Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-repo-url>
+cd recipe-book
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# NextAuth Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key-here
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Backend API
+NEXT_PUBLIC_API_URL=http://localhost:5000
+
+# ImgBB (optional, for image uploads)
+IMGBB_API_KEY=your-imgbb-api-key
+```
+
+### 4. Google OAuth Setup
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing one
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Add authorized redirect URI: `http://localhost:3000/api/auth/callback/google`
+
+### 5. Run Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 6. Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## 🗂️ Route Summary
 
-To learn more about Next.js, take a look at the following resources:
+### Public Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Route           | Component       | Description                                               |
+| --------------- | --------------- | --------------------------------------------------------- |
+| `/`             | `Home`          | Landing page with hero section, top recipes, and features |
+| `/login`        | `Login`         | User authentication page                                  |
+| `/register`     | `Register`      | User registration page                                    |
+| `/recipes`      | `AllRecipes`    | Browse all available recipes                              |
+| `/recipes/[id]` | `RecipeDetails` | View individual recipe details                            |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Protected Routes (Dashboard)
 
-## Deploy on Vercel
+| Route                  | Component   | Description                       |
+| ---------------------- | ----------- | --------------------------------- |
+| `/dashboard/addRecipe` | `AddRecipe` | Create new recipe form            |
+| `/dashboard/myRecipe`  | `MyRecipes` | User's personal recipe collection |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### API Routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Route                     | Description                          |
+| ------------------------- | ------------------------------------ |
+| `/api/auth/[...nextauth]` | NextAuth.js authentication endpoints |
+| `/api/recipes`            | Recipe CRUD operations               |
+
+### Component Structure
+
+```
+components/
+├── AuthProvider.jsx          # Authentication context
+├── DarkModeToggle.jsx        # Theme switcher
+├── Navbar.jsx               # Navigation header
+├── Hero.jsx                 # Landing hero section
+├── RecipeCard.jsx           # Individual recipe display
+├── RecipeDetails.jsx        # Full recipe view
+├── AddRecipe.jsx            # Recipe creation form
+├── MyRecipes.jsx            # User's recipes
+├── WhyWe.jsx                # Features section
+├── CookingTips.jsx          # Cooking tips component
+├── TopRecipes.jsx           # Featured recipes
+└── ui/                      # Reusable UI components
+    ├── button.jsx
+    └── loader.jsx
+```
+
+## 🔧 Configuration
+
+### Next.js Config
+
+The application includes optimized image handling for ImgBB:
+
+```javascript
+// next.config.mjs
+images: {
+  remotePatterns: [
+    {
+      protocol: 'https',
+      hostname: 'i.ibb.co',
+      port: '',
+      pathname: '/**',
+    },
+  ],
+}
+```
+
+### Middleware
+
+Protected routes are secured with NextAuth middleware:
+
+```javascript
+// middleware.js
+export default auth((request) => {
+  const isProtected = protectedRoutes.some((path) =>
+    url.pathname.startsWith(path)
+  );
+  const isLoggedIn = !!request.auth;
+
+  if (isProtected && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+});
+```
+
+## 🎨 Styling
+
+- **Tailwind CSS**: Utility-first CSS framework
+- **Custom Components**: Reusable UI components with consistent design
+- **Dark Mode**: Automatic theme switching with system preference detection
+- **Responsive**: Mobile-first design approach
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy automatically on push
+
+### Environment Variables for Production
+
+```env
+NEXTAUTH_URL=https://your-domain.vercel.app
+NEXTAUTH_SECRET=your-production-secret
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+NEXT_PUBLIC_API_URL=https://your-backend-api.com
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Next.js team for the amazing framework
+- Vercel for hosting and deployment
+- Tailwind CSS for the utility-first approach
+- Lucide for beautiful icons
+
+## 📞 Support
+
+If you have any questions or need help, please open an issue on GitHub or contact the development team.
+
+---
+
+**Happy Cooking! 🍽️**

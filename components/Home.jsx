@@ -1,8 +1,5 @@
 import { Suspense } from "react";
 import Hero from "./Hero";
-import { PiChefHat } from "react-icons/pi";
-import { IoIosTimer } from "react-icons/io";
-import { MdOutlineFamilyRestroom } from "react-icons/md";
 import Link from "next/link";
 import TopRecipes from "./TopRecipes";
 import MyRecipeCardSkeleton from "./Skeleton/MyRecipeCardSkeleton";
@@ -39,7 +36,7 @@ export default function Home() {
         </div>
       </section>
 
-      <WhyWe/>
+      <WhyWe />
       <CookingTips />
     </div>
   );

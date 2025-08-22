@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import DarkModeToggle from "./DarkModeToggle";
 import { useState, useEffect, useRef } from "react";
 import Logo from "./Logo";
+import NavLink from "./NavLink";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -40,31 +41,23 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-orange-100 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:border-gray-700 dark:bg-gray-900/80">
       <div className="mx-auto flex w-11/12 max-w-7xl items-center justify-between py-3">
-        {/* Brand */}
-        {/* <Link
-          href="/"
-          className="text-2xl font-extrabold tracking-tight text-orange-600"
-        >
-          Recipe Book
-        </Link> */}
         <Logo/>
-
         {/* Desktop Nav */}
         <div className="hidden items-center gap-6 md:flex ">
-          <Link href="/" className={navLinkClasses}>
+          <NavLink href="/" className={navLinkClasses}>
             Home
-          </Link>
-          <Link href="/recipes" className={navLinkClasses}>
-            All Recipes
-          </Link>
+          </NavLink>
+          <NavLink href="/recipes" className={navLinkClasses}>
+            Recipes
+          </NavLink>
           {session?.user && (
             <>
-              <Link href="/dashboard/addRecipe" className={navLinkClasses}>
+              <NavLink href="/dashboard/addRecipe" className={navLinkClasses}>
                 Add Recipe
-              </Link>
-              <Link href="/dashboard/myRecipe" className={navLinkClasses}>
+              </NavLink>
+              <NavLink href="/dashboard/myRecipe" className={navLinkClasses}>
                 My Recipes
-              </Link>
+              </NavLink>
             </>
           )}
         </div>
@@ -95,7 +88,7 @@ export default function Navbar() {
                     : "/default-avatar.png"
                 }
                 alt="avatar"
-                className="h-10 w-10 cursor-pointer rounded-full ring-2 ring-orange-500 object-cover"
+                className="h-10 w-10 cursor-pointer rounded-full ring-2 ring-orange-600 dark:ring-orange-400  object-cover"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 onError={(e) => {
                   setImgError(true);
