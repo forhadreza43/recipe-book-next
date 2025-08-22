@@ -1,16 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, Heart, ChefHat } from "lucide-react";
+import { generateBlurDataURL } from "@/utils/utils";
 
 const RecipeCard = ({ recipe }) => {
-
-
-  // Generate a simple blur data URL for the placeholder
-  const generateBlurDataURL = () => {
-    const base64 =
-      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+";
-    return base64;
-  };
 
   return (
     <div className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">

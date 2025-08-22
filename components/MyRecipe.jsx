@@ -15,27 +15,28 @@ export default function MyRecipes() {
   const { data: session } = useSession();
   const user = session?.user;
 
+  const fetchUserRecipes = async () => {
+    if (!user?.email) {
+      setIsLoading(false);
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/recipes`
+      );
+      const data = await response.json();
+      const usersData = data.filter((rec) => rec.userEmail === user?.email);
+      setRecipes(usersData);
+    } catch (error) {
+      toast.error("Failed to fetch your recipes.");
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserRecipes = async () => {
-      if (!user?.email) {
-        setIsLoading(false);
-        return;
-      }
-      try {
-        setIsLoading(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/recipes`
-        );
-        const data = await response.json();
-        const usersData = data.filter((rec) => rec.userEmail === user?.email);
-        setRecipes(usersData);
-      } catch (error) {
-        toast.error("Failed to fetch your recipes.");
-        console.log(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchUserRecipes();
   }, [user?.email]);
 
@@ -76,16 +77,21 @@ export default function MyRecipes() {
   };
 
   const handleUpdate = (updatedRecipe) => {
+    // Update local state immediately for instant feedback
     setRecipes((prev) =>
       prev.map((r) => (r._id === updatedRecipe._id ? updatedRecipe : r))
     );
     setSelectedRecipe(null);
+    toast.success("Recipe updated successfully!");
+
+    // Refetch recipes to ensure we have the latest data from server
+    fetchUserRecipes();
   };
 
   return (
-    <div className="py-10 pt-25 lg:pt-30">
+    <div className="py-10 pt-20 lg:pt-25">
       <>
-        <h1 className="mb-6 text-center text-3xl font-bold dark:text-gray-200">
+        <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 lg:text-5xl">
           My Recipes
         </h1>
         {isLoading ? (

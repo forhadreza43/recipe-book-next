@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import RecipeFilter from "./RecipeFilter";
-import MyRecipeCardSkeleton from "./Skeleton/MyRecipeCardSkeleton";
+import RecipeCardSkeleton from "./Skeleton/RecipeCardSkeleton";
 
 async function getRecipes() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recipes`, {
@@ -46,7 +46,7 @@ export default function RecipesContainer() {
     return (
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {[...Array(6)].map((_, i) => (
-          <MyRecipeCardSkeleton key={i} />
+          <RecipeCardSkeleton key={i} />
         ))}
       </div>
     );

@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import Hero from "./Hero";
 import Link from "next/link";
 import TopRecipes from "./TopRecipes";
-import MyRecipeCardSkeleton from "./Skeleton/MyRecipeCardSkeleton";
 import CookingTips from "./CookingTips";
 import WhyWe from "./WhyWe";
+import RecipeCardSkeleton from "./Skeleton/RecipeCardSkeleton";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
           fallback={
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[...Array(3)].map((_, i) => (
-                <MyRecipeCardSkeleton key={i} />
+                <RecipeCardSkeleton key={i} />
               ))}
             </div>
           }
