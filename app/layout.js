@@ -27,7 +27,19 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900`}
       >
         <Providers>
-          <Toaster position="top-right" reverseOrder={false} />
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+            toastOptions={{
+              className: "bg-orange-100 text-orange-400 rounded-lg",
+              success: {
+                className: "bg-orange-100 text-white",
+              },
+              error: {
+                className: "bg-red-100 text-white",
+              },
+            }}
+          />
           <header>
             <Navbar />
           </header>

@@ -2,5 +2,7 @@
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/dashboard/addRecipe/page": "app/dashboard/addRecipe/page.js",
   "/dashboard/myRecipe/page": "app/dashboard/myRecipe/page.js",
-  "/page": "app/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/recipes/page": "app/recipes/page.js"
 }

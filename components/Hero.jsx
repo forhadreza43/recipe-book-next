@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChefHat, Search, Users, Clock, Star } from "lucide-react";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const Hero = () => {
   return (
     <section className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-orange-50 via-white to-orange-100 dark:from-gray-900 dark:via-gray-800 dark:to-orange-900/20">
@@ -73,17 +73,32 @@ const Hero = () => {
 
             {/* Trust Indicators */}
             <div className="flex items-center gap-6 pt-4">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="h-8 w-8 rounded-full border-2 border-white bg-gray-300 dark:border-gray-700 dark:bg-gray-600"
-                  ></div>
-                ))}
+              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 ">
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/leerob.png"
+                    alt="@leerob"
+                  />
+                  <AvatarFallback>LR</AvatarFallback>
+                </Avatar>
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/forhadreza43.png"
+                    alt="@forhadreza43"
+                  />
+                  <AvatarFallback>ER</AvatarFallback>
+                </Avatar>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  5,000+
+                  500+
                 </span>{" "}
                 happy chefs already cooking
               </div>
@@ -105,7 +120,7 @@ const Hero = () => {
               </div>
 
               {/* Floating Recipe Cards */}
-              <div className="absolute -left-4 -top-4 rounded-xl bg-white p-4 shadow-lg dark:bg-gray-800">
+              <div className="absolute -left-4 -top-6 rounded-xl bg-white p-4 shadow-lg dark:bg-gray-800">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full bg-orange-100 dark:bg-orange-900/30"></div>
                   <div>
@@ -122,7 +137,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="absolute -bottom-4 -right-4 rounded-xl bg-white p-4 shadow-lg dark:bg-gray-800">
+              <div className="absolute -bottom-6 -right-4 rounded-xl bg-white p-4 shadow-lg dark:bg-gray-800">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full bg-green-100 dark:bg-green-900/30"></div>
                   <div>
@@ -142,7 +157,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
 
       <div className="absolute bottom-0 left-0 right-0">
         <svg
