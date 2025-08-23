@@ -6,7 +6,11 @@ __turbopack_context__.s([
     "cuisineTypes",
     ()=>cuisineTypes,
     "generateBlurDataURL",
-    ()=>generateBlurDataURL
+    ()=>generateBlurDataURL,
+    "getImageUrlCloudinary",
+    ()=>getImageUrlCloudinary,
+    "getImageUrlImgBB",
+    ()=>getImageUrlImgBB
 ]);
 const cuisineTypes = [
     "Italian",
@@ -18,6 +22,33 @@ const cuisineTypes = [
 const generateBlurDataURL = ()=>{
     const base64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+";
     return base64;
+};
+const getImageUrlImgBB = async (imageData)=>{
+    const imageFormData = new FormData();
+    imageFormData.append("image", imageData);
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${("TURBOPACK compile-time value", "4afac0e722d8dcb56926c628da6d87cb")}`, {
+        method: "POST",
+        body: imageFormData
+    });
+    if (!response.ok) {
+        throw new Error("Image upload failed");
+    }
+    const data = await response.json();
+    return data.data.url;
+};
+const getImageUrlCloudinary = async (imageFile)=>{
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", "unsigned_upload");
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${("TURBOPACK compile-time value", "dqs6k0so6")}/image/upload`, {
+        method: "POST",
+        body: formData
+    });
+    if (!response.ok) {
+        throw new Error("Image upload failed");
+    }
+    const data = await response.json();
+    return data.secure_url;
 };
 }),
 "[project]/components/ui/loader.jsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
@@ -449,6 +480,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 ;
 ;
 ;
+;
 const categories = [
     "Breakfast",
     "Lunch",
@@ -463,6 +495,7 @@ function AddRecipe() {
     const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSession"])();
     const user = session?.user;
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [imageUploading, setImageUploading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         image: "",
         title: "",
@@ -482,7 +515,7 @@ function AddRecipe() {
         if (!formData.cuisine) newErrors.cuisine = "Please select a cuisine type";
         if (!formData.time || formData.time <= 0) newErrors.time = "Valid preparation time is required";
         if (formData.categories.length === 0) newErrors.categories = "Please select at least one category";
-        if (!formData.image.trim()) newErrors.image = "Image URL is required";
+        if (!formData.image.trim()) newErrors.image = "Image is required";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -562,6 +595,34 @@ function AddRecipe() {
                 categories: prev.categories.filter((cat)=>cat !== categoryToRemove)
             }));
     };
+    const handleFileChange = async (e)=>{
+        const file = e.target.files[0];
+        // console.log(file)
+        if (!file) return;
+        setImageUploading(true);
+        try {
+            const url = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$utils$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getImageUrlCloudinary"])(file);
+            // console.log(cloudinary)
+            // const url = await getImageUrlImgBB(file);
+            setFormData((prev)=>({
+                    ...prev,
+                    image: url
+                }));
+            setErrors((prev)=>({
+                    ...prev,
+                    image: ""
+                }));
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].success("Image uploaded successfully!");
+        } catch (error) {
+            setErrors((prev)=>({
+                    ...prev,
+                    image: "Failed to upload image"
+                }));
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].error("Failed to upload image");
+        } finally{
+            setImageUploading(false);
+        }
+    };
     if (isLoading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex min-h-screen items-center justify-center",
@@ -569,12 +630,12 @@ function AddRecipe() {
                 text: "Adding Recipe..."
             }, void 0, false, {
                 fileName: "[project]/components/AddRecipe.jsx",
-                lineNumber: 153,
+                lineNumber: 175,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/AddRecipe.jsx",
-            lineNumber: 152,
+            lineNumber: 174,
             columnNumber: 7
         }, this);
     }
@@ -592,12 +653,12 @@ function AddRecipe() {
                                 className: "h-8 w-8 text-orange-600 dark:text-orange-400"
                             }, void 0, false, {
                                 fileName: "[project]/components/AddRecipe.jsx",
-                                lineNumber: 164,
+                                lineNumber: 186,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/AddRecipe.jsx",
-                            lineNumber: 163,
+                            lineNumber: 185,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -605,7 +666,7 @@ function AddRecipe() {
                             children: "Add a New Recipe"
                         }, void 0, false, {
                             fileName: "[project]/components/AddRecipe.jsx",
-                            lineNumber: 166,
+                            lineNumber: 188,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -613,13 +674,13 @@ function AddRecipe() {
                             children: "Share your culinary masterpiece with the community"
                         }, void 0, false, {
                             fileName: "[project]/components/AddRecipe.jsx",
-                            lineNumber: 169,
+                            lineNumber: 191,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/AddRecipe.jsx",
-                    lineNumber: 162,
+                    lineNumber: 184,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -641,7 +702,7 @@ function AddRecipe() {
                                                         children: "Recipe Title *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 182,
+                                                        lineNumber: 204,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -654,7 +715,7 @@ function AddRecipe() {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 185,
+                                                        lineNumber: 207,
                                                         columnNumber: 19
                                                     }, this),
                                                     errors.title && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -662,23 +723,23 @@ function AddRecipe() {
                                                         children: errors.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 199,
+                                                        lineNumber: 221,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 181,
+                                                lineNumber: 203,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                                         className: "mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300",
-                                                        children: "Image URL *"
+                                                        children: "Upload Image *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 207,
+                                                        lineNumber: 229,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -688,40 +749,63 @@ function AddRecipe() {
                                                                 className: "absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                                lineNumber: 211,
+                                                                lineNumber: 233,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                                type: "url",
-                                                                name: "image",
-                                                                placeholder: "https://example.com/image.jpg",
-                                                                value: formData.image,
-                                                                onChange: handleChange,
-                                                                className: `w-full rounded-lg border pl-10 pr-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 ${errors.image ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300"}`,
-                                                                required: true
+                                                                type: "file",
+                                                                accept: ".jpg, .jpeg, .png",
+                                                                onChange: handleFileChange,
+                                                                className: `w-full rounded-lg border pl-10 pr-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400`,
+                                                                required: true,
+                                                                disabled: imageUploading
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                                lineNumber: 212,
+                                                                lineNumber: 234,
                                                                 columnNumber: 21
+                                                            }, this),
+                                                            imageUploading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "absolute right-3 top-1/2 -translate-y-1/2 text-orange-500 text-sm",
+                                                                children: "Uploading..."
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/components/AddRecipe.jsx",
+                                                                lineNumber: 243,
+                                                                columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 210,
+                                                        lineNumber: 232,
                                                         columnNumber: 19
+                                                    }, this),
+                                                    formData.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "mt-2",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                            src: formData.image,
+                                                            alt: "Preview",
+                                                            className: "h-24 rounded-lg border"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/AddRecipe.jsx",
+                                                            lineNumber: 250,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/AddRecipe.jsx",
+                                                        lineNumber: 249,
+                                                        columnNumber: 21
                                                     }, this),
                                                     errors.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "mt-1 text-sm text-red-600 dark:text-red-400",
                                                         children: errors.image
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 227,
+                                                        lineNumber: 258,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 206,
+                                                lineNumber: 228,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -731,7 +815,7 @@ function AddRecipe() {
                                                         children: "Cuisine Type *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 235,
+                                                        lineNumber: 266,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -746,7 +830,7 @@ function AddRecipe() {
                                                                 children: "Select Cuisine Type"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                                lineNumber: 249,
+                                                                lineNumber: 280,
                                                                 columnNumber: 21
                                                             }, this),
                                                             __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$utils$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cuisineTypes"].map((type)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -754,13 +838,13 @@ function AddRecipe() {
                                                                     children: type
                                                                 }, type, false, {
                                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                                    lineNumber: 251,
+                                                                    lineNumber: 282,
                                                                     columnNumber: 23
                                                                 }, this))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 238,
+                                                        lineNumber: 269,
                                                         columnNumber: 19
                                                     }, this),
                                                     errors.cuisine && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -768,13 +852,13 @@ function AddRecipe() {
                                                         children: errors.cuisine
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 257,
+                                                        lineNumber: 288,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 234,
+                                                lineNumber: 265,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -784,7 +868,7 @@ function AddRecipe() {
                                                         children: "Preparation Time (minutes) *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 265,
+                                                        lineNumber: 296,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -794,7 +878,7 @@ function AddRecipe() {
                                                                 className: "absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                                lineNumber: 269,
+                                                                lineNumber: 300,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -808,13 +892,13 @@ function AddRecipe() {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                                lineNumber: 270,
+                                                                lineNumber: 301,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 268,
+                                                        lineNumber: 299,
                                                         columnNumber: 19
                                                     }, this),
                                                     errors.time && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -822,19 +906,19 @@ function AddRecipe() {
                                                         children: errors.time
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 286,
+                                                        lineNumber: 317,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 264,
+                                                lineNumber: 295,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/AddRecipe.jsx",
-                                        lineNumber: 179,
+                                        lineNumber: 201,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -846,7 +930,7 @@ function AddRecipe() {
                                                     children: "Categories *"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                    lineNumber: 297,
+                                                    lineNumber: 328,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -863,7 +947,7 @@ function AddRecipe() {
                                                                     className: "h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 dark:border-gray-600"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                                    lineNumber: 306,
+                                                                    lineNumber: 337,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -871,18 +955,18 @@ function AddRecipe() {
                                                                     children: cat
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                                    lineNumber: 314,
+                                                                    lineNumber: 345,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, cat, true, {
                                                             fileName: "[project]/components/AddRecipe.jsx",
-                                                            lineNumber: 302,
+                                                            lineNumber: 333,
                                                             columnNumber: 23
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                    lineNumber: 300,
+                                                    lineNumber: 331,
                                                     columnNumber: 19
                                                 }, this),
                                                 errors.categories && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -890,7 +974,7 @@ function AddRecipe() {
                                                     children: errors.categories
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                    lineNumber: 321,
+                                                    lineNumber: 352,
                                                     columnNumber: 21
                                                 }, this),
                                                 formData.categories.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -901,7 +985,7 @@ function AddRecipe() {
                                                             children: "Selected:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/AddRecipe.jsx",
-                                                            lineNumber: 329,
+                                                            lineNumber: 360,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -918,46 +1002,46 @@ function AddRecipe() {
                                                                                 className: "h-3 w-3"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                                                lineNumber: 344,
+                                                                                lineNumber: 375,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/AddRecipe.jsx",
-                                                                            lineNumber: 339,
+                                                                            lineNumber: 370,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, category, true, {
                                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                                    lineNumber: 334,
+                                                                    lineNumber: 365,
                                                                     columnNumber: 27
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/AddRecipe.jsx",
-                                                            lineNumber: 332,
+                                                            lineNumber: 363,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/AddRecipe.jsx",
-                                                    lineNumber: 328,
+                                                    lineNumber: 359,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/AddRecipe.jsx",
-                                            lineNumber: 296,
+                                            lineNumber: 327,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/AddRecipe.jsx",
-                                        lineNumber: 294,
+                                        lineNumber: 325,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/AddRecipe.jsx",
-                                lineNumber: 177,
+                                lineNumber: 199,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -970,7 +1054,7 @@ function AddRecipe() {
                                                 children: "Ingredients *"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 359,
+                                                lineNumber: 390,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -980,7 +1064,7 @@ function AddRecipe() {
                                                         className: "absolute left-3 top-3 h-5 w-5 text-gray-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 363,
+                                                        lineNumber: 394,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -993,13 +1077,13 @@ function AddRecipe() {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 364,
+                                                        lineNumber: 395,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 362,
+                                                lineNumber: 393,
                                                 columnNumber: 17
                                             }, this),
                                             errors.ingredients && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1007,13 +1091,13 @@ function AddRecipe() {
                                                 children: errors.ingredients
                                             }, void 0, false, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 379,
+                                                lineNumber: 410,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/AddRecipe.jsx",
-                                        lineNumber: 358,
+                                        lineNumber: 389,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1023,7 +1107,7 @@ function AddRecipe() {
                                                 children: "Instructions *"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 387,
+                                                lineNumber: 418,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1033,7 +1117,7 @@ function AddRecipe() {
                                                         className: "absolute left-3 top-3 h-5 w-5 text-gray-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 391,
+                                                        lineNumber: 422,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1046,13 +1130,13 @@ function AddRecipe() {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/AddRecipe.jsx",
-                                                        lineNumber: 392,
+                                                        lineNumber: 423,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 390,
+                                                lineNumber: 421,
                                                 columnNumber: 17
                                             }, this),
                                             errors.instructions && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1060,19 +1144,19 @@ function AddRecipe() {
                                                 children: errors.instructions
                                             }, void 0, false, {
                                                 fileName: "[project]/components/AddRecipe.jsx",
-                                                lineNumber: 407,
+                                                lineNumber: 438,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/AddRecipe.jsx",
-                                        lineNumber: 386,
+                                        lineNumber: 417,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/AddRecipe.jsx",
-                                lineNumber: 356,
+                                lineNumber: 387,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1086,41 +1170,41 @@ function AddRecipe() {
                                             className: "h-5 w-5"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AddRecipe.jsx",
-                                            lineNumber: 421,
+                                            lineNumber: 452,
                                             columnNumber: 17
                                         }, this),
                                         isLoading ? "Adding Recipe..." : "Add Recipe"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/AddRecipe.jsx",
-                                    lineNumber: 416,
+                                    lineNumber: 447,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/AddRecipe.jsx",
-                                lineNumber: 415,
+                                lineNumber: 446,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/AddRecipe.jsx",
-                        lineNumber: 176,
+                        lineNumber: 198,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/AddRecipe.jsx",
-                    lineNumber: 175,
+                    lineNumber: 197,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/AddRecipe.jsx",
-            lineNumber: 160,
+            lineNumber: 182,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/AddRecipe.jsx",
-        lineNumber: 159,
+        lineNumber: 181,
         columnNumber: 5
     }, this);
 }

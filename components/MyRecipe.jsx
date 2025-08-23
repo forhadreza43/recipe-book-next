@@ -91,7 +91,7 @@ export default function MyRecipes() {
   return (
     <div className="py-10 pt-20 lg:pt-25">
       <>
-        <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 lg:text-5xl">
+        <h1 className="mb-8 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 lg:text-4xl">
           My Recipes
         </h1>
         {isLoading ? (

@@ -20,7 +20,6 @@ const RecipeCard = ({ recipe }) => {
             blurDataURL={generateBlurDataURL()}
             priority={false}
           />
-
           <div className="flex h-full w-full items-center justify-center bg-gray-200 dark:bg-gray-700">
             <ChefHat className="h-12 w-12 text-gray-400" />
           </div>

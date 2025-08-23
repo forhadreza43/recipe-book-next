@@ -136,44 +136,6 @@ components/
     └── loader.jsx
 ```
 
-## 🔧 Configuration
-
-### Next.js Config
-
-The application includes optimized image handling for ImgBB:
-
-```javascript
-// next.config.mjs
-images: {
-  remotePatterns: [
-    {
-      protocol: 'https',
-      hostname: 'i.ibb.co',
-      port: '',
-      pathname: '/**',
-    },
-  ],
-}
-```
-
-### Middleware
-
-Protected routes are secured with NextAuth middleware:
-
-```javascript
-// middleware.js
-export default auth((request) => {
-  const isProtected = protectedRoutes.some((path) =>
-    url.pathname.startsWith(path)
-  );
-  const isLoggedIn = !!request.auth;
-
-  if (isProtected && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-});
-```
-
 ## 🎨 Styling
 
 - **Tailwind CSS**: Utility-first CSS framework
@@ -193,11 +155,15 @@ export default auth((request) => {
 ### Environment Variables for Production
 
 ```env
-NEXTAUTH_URL=https://your-domain.vercel.app
-NEXTAUTH_SECRET=your-production-secret
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
+AUTH_URL=https://your-domain.vercel.app
+AUTH_SECRET=your-production-secret
+AUTH_GOOGLE_ID=your-google-client-id
+AUTH_GOOGLE_SECRET=your-google-client-secret
 NEXT_PUBLIC_API_URL=https://your-backend-api.com
+NEXT_PUBLIC_IMGBB_API_KEY=your-imgBB-api-key
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your-cloudinary-cloud-name"
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET="cloudinary-preset-name"
+AUTH_TRUST_HOST=true
 ```
 
 ## 🤝 Contributing

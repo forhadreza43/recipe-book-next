@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
       {/* Hero Content */}
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+      <div className="relative mx-auto  px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Left Column - Text Content */}
           <div className="space-y-8">
@@ -143,7 +143,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom Wave/Divider */}
+
       <div className="absolute bottom-0 left-0 right-0">
         <svg
           className="h-16 w-full text-white dark:text-gray-900"

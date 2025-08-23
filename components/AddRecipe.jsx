@@ -1,5 +1,6 @@
 "use client";
-import { cuisineTypes } from "@/utils/utils";
+import { cuisineTypes, getImageUrlCloudinary } from "@/utils/utils";
+import { getImageUrlImgBB } from "@/utils/utils";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -29,6 +30,7 @@ export default function AddRecipe() {
   const { data: session } = useSession();
   const user = session?.user;
   const [isLoading, setIsLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
 
   const [formData, setFormData] = useState({
     image: "",
@@ -56,7 +58,7 @@ export default function AddRecipe() {
       newErrors.time = "Valid preparation time is required";
     if (formData.categories.length === 0)
       newErrors.categories = "Please select at least one category";
-    if (!formData.image.trim()) newErrors.image = "Image URL is required";
+    if (!formData.image.trim()) newErrors.image = "Image is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -147,6 +149,26 @@ export default function AddRecipe() {
     }));
   };
 
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    // console.log(file)
+    if (!file) return;
+    setImageUploading(true);
+    try {
+      const url = await getImageUrlCloudinary(file);
+      // console.log(cloudinary)
+      // const url = await getImageUrlImgBB(file);
+      setFormData((prev) => ({ ...prev, image: url }));
+      setErrors((prev) => ({ ...prev, image: "" }));
+      toast.success("Image uploaded successfully!");
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, image: "Failed to upload image" }));
+      toast.error("Failed to upload image");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -202,27 +224,36 @@ export default function AddRecipe() {
                   )}
                 </div>
 
-                {/* Image URL */}
+                {/* Image Upload */}
                 <div>
                   <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Image URL *
+                    Upload Image *
                   </label>
                   <div className="relative">
                     <ImageIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                     <input
-                      type="url"
-                      name="image"
-                      placeholder="https://example.com/image.jpg"
-                      value={formData.image}
-                      onChange={handleChange}
-                      className={`w-full rounded-lg border pl-10 pr-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 ${
-                        errors.image
-                          ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                          : "border-gray-300"
-                      }`}
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      onChange={handleFileChange}
+                      className={`w-full rounded-lg border pl-10 pr-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400`}
                       required
+                      disabled={imageUploading}
                     />
+                    {imageUploading && (
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-orange-500 text-sm">
+                        Uploading...
+                      </span>
+                    )}
                   </div>
+                  {formData.image && (
+                    <div className="mt-2">
+                      <img
+                        src={formData.image}
+                        alt="Preview"
+                        className="h-24 rounded-lg border"
+                      />
+                    </div>
+                  )}
                   {errors.image && (
                     <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                       {errors.image}

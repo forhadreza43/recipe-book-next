@@ -79,7 +79,7 @@ const Hero = ()=>{
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-32",
+                className: "relative mx-auto  px-4 py-20 sm:px-6 lg:px-8 lg:py-32",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid items-center gap-12 lg:grid-cols-2",
                     children: [
@@ -581,7 +581,11 @@ __turbopack_context__.s([
     "cuisineTypes",
     ()=>cuisineTypes,
     "generateBlurDataURL",
-    ()=>generateBlurDataURL
+    ()=>generateBlurDataURL,
+    "getImageUrlCloudinary",
+    ()=>getImageUrlCloudinary,
+    "getImageUrlImgBB",
+    ()=>getImageUrlImgBB
 ]);
 const cuisineTypes = [
     "Italian",
@@ -593,6 +597,33 @@ const cuisineTypes = [
 const generateBlurDataURL = ()=>{
     const base64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+";
     return base64;
+};
+const getImageUrlImgBB = async (imageData)=>{
+    const imageFormData = new FormData();
+    imageFormData.append("image", imageData);
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${("TURBOPACK compile-time value", "4afac0e722d8dcb56926c628da6d87cb")}`, {
+        method: "POST",
+        body: imageFormData
+    });
+    if (!response.ok) {
+        throw new Error("Image upload failed");
+    }
+    const data = await response.json();
+    return data.data.url;
+};
+const getImageUrlCloudinary = async (imageFile)=>{
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", "unsigned_upload");
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${("TURBOPACK compile-time value", "dqs6k0so6")}/image/upload`, {
+        method: "POST",
+        body: formData
+    });
+    if (!response.ok) {
+        throw new Error("Image upload failed");
+    }
+    const data = await response.json();
+    return data.secure_url;
 };
 }),
 "[project]/components/RecipeCard.jsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
@@ -641,12 +672,12 @@ const RecipeCard = ({ recipe })=>{
                             className: "h-12 w-12 text-gray-400"
                         }, void 0, false, {
                             fileName: "[project]/components/RecipeCard.jsx",
-                            lineNumber: 25,
+                            lineNumber: 24,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/components/RecipeCard.jsx",
-                        lineNumber: 24,
+                        lineNumber: 23,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -656,12 +687,12 @@ const RecipeCard = ({ recipe })=>{
                             children: recipe.cuisine || "Recipe"
                         }, void 0, false, {
                             fileName: "[project]/components/RecipeCard.jsx",
-                            lineNumber: 31,
+                            lineNumber: 30,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/components/RecipeCard.jsx",
-                        lineNumber: 30,
+                        lineNumber: 29,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -671,7 +702,7 @@ const RecipeCard = ({ recipe })=>{
                                 className: "h-3 w-3 fill-current"
                             }, void 0, false, {
                                 fileName: "[project]/components/RecipeCard.jsx",
-                                lineNumber: 38,
+                                lineNumber: 37,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -679,13 +710,13 @@ const RecipeCard = ({ recipe })=>{
                                 children: recipe.likes || 0
                             }, void 0, false, {
                                 fileName: "[project]/components/RecipeCard.jsx",
-                                lineNumber: 39,
+                                lineNumber: 38,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/RecipeCard.jsx",
-                        lineNumber: 37,
+                        lineNumber: 36,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
@@ -702,7 +733,7 @@ const RecipeCard = ({ recipe })=>{
                         children: recipe.title
                     }, void 0, false, {
                         fileName: "[project]/components/RecipeCard.jsx",
-                        lineNumber: 45,
+                        lineNumber: 44,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -715,20 +746,20 @@ const RecipeCard = ({ recipe })=>{
                                         className: "h-4 w-4 text-orange-500"
                                     }, void 0, false, {
                                         fileName: "[project]/components/RecipeCard.jsx",
-                                        lineNumber: 52,
+                                        lineNumber: 51,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: recipe.cuisine || "International"
                                     }, void 0, false, {
                                         fileName: "[project]/components/RecipeCard.jsx",
-                                        lineNumber: 53,
+                                        lineNumber: 52,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/RecipeCard.jsx",
-                                lineNumber: 51,
+                                lineNumber: 50,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             recipe.cookingTime && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -738,7 +769,7 @@ const RecipeCard = ({ recipe })=>{
                                         className: "h-4 w-4 text-orange-500"
                                     }, void 0, false, {
                                         fileName: "[project]/components/RecipeCard.jsx",
-                                        lineNumber: 57,
+                                        lineNumber: 56,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -748,19 +779,19 @@ const RecipeCard = ({ recipe })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/RecipeCard.jsx",
-                                        lineNumber: 58,
+                                        lineNumber: 57,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/RecipeCard.jsx",
-                                lineNumber: 56,
+                                lineNumber: 55,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/RecipeCard.jsx",
-                        lineNumber: 50,
+                        lineNumber: 49,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
@@ -780,24 +811,24 @@ const RecipeCard = ({ recipe })=>{
                                     d: "M9 5l7 7-7 7"
                                 }, void 0, false, {
                                     fileName: "[project]/components/RecipeCard.jsx",
-                                    lineNumber: 75,
+                                    lineNumber: 74,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/components/RecipeCard.jsx",
-                                lineNumber: 69,
+                                lineNumber: 68,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/RecipeCard.jsx",
-                        lineNumber: 64,
+                        lineNumber: 63,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/RecipeCard.jsx",
-                lineNumber: 44,
+                lineNumber: 43,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]

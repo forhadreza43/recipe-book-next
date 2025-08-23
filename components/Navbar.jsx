@@ -88,7 +88,7 @@ export default function Navbar() {
                     : "/default-avatar.png"
                 }
                 alt="avatar"
-                className="h-10 w-10 cursor-pointer rounded-full ring-2 ring-orange-600 dark:ring-orange-400  object-cover"
+                className="h-10 w-10 cursor-pointer rounded-full ring-2 ring-orange-600 dark: ring-o  object-cover"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 onError={(e) => {
                   setImgError(true);
